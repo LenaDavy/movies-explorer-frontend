@@ -1,0 +1,134 @@
+.movie {
+  background-color: #222222;
+  display: grid;
+  overflow: hidden; 
+  border-radius: 6px;
+}
+
+.movie__preview {
+  margin: auto;
+  width: auto;
+  max-height: 203px;
+}
+@media screen and (max-width: 1040px) and (min-width: 768px){
+  .movie__preview {
+    max-height: 190px;
+  }
+}
+
+@media screen and (max-width: 767.5px) {
+  .movie__preview {
+    max-height: 168px;
+  }
+}
+
+.movie__description {
+  width: 100%;
+  max-width: 364px;
+  display: grid;
+  grid-template-columns: 1fr min-content;
+  text-align: start;
+}
+
+@media screen and (max-width: 1040px) and (min-width: 768px){
+  .movie__description {
+    max-width: 339px;
+  }
+}
+
+@media screen and (max-width: 767.5px) {
+  .movie__description {
+    max-width: 300px;
+  }
+}
+
+.movie__title {
+  margin: 16px 12px 17px 16px;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16spx;
+}
+
+@media screen and (max-width: 1040px) and (min-width: 768px){
+  .movie__title {
+    margin: 14px 21px 15px 14px;
+  }
+}
+
+@media screen and (max-width: 767.5px) {
+  .movie__title {
+    margin: 14px 6px 14px 14px;
+    font-size: 12px;
+    line-height: 15px;
+  }
+}
+
+.movie__button {
+  margin-top: 9px;
+  margin-right: 16px;
+  width: 30px;
+  height: 30px;
+  border: none;
+  background-color: inherit;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.movie__button_type_like-active {
+  background-image: url('./../../images/like-button_active.svg');
+}
+
+.movie__button_type_delete {
+  background-image: url('./../../images/btn-delete.svg');
+  opacity: 0;
+}
+
+.movie__button_type_delete:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 760px) {
+  .movie__button_type_delete {
+    opacity: 1;
+  }
+}
+
+
+@media screen and (max-width: 1040px) and (min-width: 768px){
+  .movie__like-button {
+    margin-top: 8px;
+    margin-right: 14px;
+  }
+}
+
+@media screen and (max-width: 767.5px) {
+  .movie__like-button {
+    margin-top: 7px;
+    margin-right: 10px;
+  }
+}
+
+.movie__duration {
+  margin-left: 16px;
+  margin-bottom: 16px;
+  font-size: 11px;
+  line-height: 13px;
+  color: #8b8b8b;
+}
+
+@media screen and (max-width: 1040px) and (min-width: 768px){
+  .movie__like-button {
+    margin-left: 14px;
+    margin-bottom: 14px;
+  }
+}
+
+@media screen and (max-width: 767.5px) {
+  .movie__like-button {
+    margin-left: 14px;
+    margin-bottom: 14px;
+    font-size: 10px;
+    line-height: 12px;
+  }
+}

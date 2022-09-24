@@ -1,0 +1,116 @@
+.profile {
+  margin: auto;
+  max-width: 410px;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile__greeting {
+  margin: 74px 0 0;
+  text-align: center;
+  font-size: 24px;
+  line-height: 29px;
+  font-weight: 500;
+}
+
+@media screen and (max-width: 1040px) and (min-width: 761px) {
+  .profile__greeting {
+    margin-top: 236px;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .profile__greeting {
+    margin-top: 70px;
+  }
+}
+
+.profile__form {
+  margin-top: 106px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media screen and (max-width: 1040px) and (min-width: 761px) {
+  .profile__form {
+    margin-top: 79px;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .profile__greeting {
+    margin-top: 63px;
+  }
+}
+
+.profile__label {
+  margin-top: 17px;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 13px;
+}
+
+.profile__label_type_underline {
+  padding-bottom: 16px;
+  border-bottom: 1px solid #424242;
+}
+
+.profile__input {
+  margin: 17px 0 0;
+  background-color: inherit;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 13px;
+  text-align: end;
+  outline: none;
+  border: none;
+}
+
+.profile__input::placeholder {color: #ffffff;}
+.profile__input::-moz-placeholder {color: #ffffff;opacity: 1;}
+.profile__input:-ms-input-placeholder {color: #ffffff;}
+
+.profile__input_type_underline {
+  padding-bottom: 16px;
+  border-bottom: 1px solid #424242;
+}
+
+.profile__button-edit {
+  margin-top: 220px;
+  color: #ffffff;
+  background-color: inherit;
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 400;
+}
+
+@media screen and (max-width: 1040px) and (min-width: 761px) {
+  .profile__button-edit {
+    margin-top: 210px;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .profile__button-edit {
+    margin-top: 379px;
+    font-size: 12px;
+    line-height: 15px;
+  }
+}
+
+.profile__button-signout {
+  margin-top: 16px;
+  color: #EE3465;
+  background-color: inherit;
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 500;
+}
+
+@media screen and (max-width: 760px) {
+  .profile__button-signout {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}

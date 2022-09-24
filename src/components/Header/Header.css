@@ -1,0 +1,105 @@
+.header {
+  padding: 18px 70px;
+  display: flex;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 1040px) and (min-width: 761px) {
+  .header {
+    padding: 15px 30px;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .header {
+    padding: 15px 14px;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .header__link-logo {
+    padding-top: 3px;
+  }
+}
+
+.header__list {
+  padding-top: 3px;
+  display: flex;
+}
+
+@media screen and (max-width: 1040px) and (min-width: 761px) {
+  .header__list {
+    padding-top: 6px;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .header__list {
+    padding-top: 9px;
+  }
+}
+
+.header__registration {
+  padding-top: 8px;
+  margin-right: 30px;
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+@media screen and (max-width: 760px) {
+  .header__registration {
+    margin-right: 14px;
+  }
+}
+
+.header__signin {
+  padding: 8px 20px;
+  background-color: #3ddc84;
+  border-radius: 3px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+}
+
+@media screen and (max-width: 760px) {
+  .header__signin {
+    padding: 5px 12px;
+  }
+}
+
+.header__navigation-area {
+  width: 100%;
+  display: grid;
+  grid-template-columns: min-content 1fr min-content;
+  align-items: center;
+}
+
+.header__movies-area {
+  display: flex;
+}
+
+@media screen and (max-width: 1040px) {
+  .header__movies-area {
+    display: none;
+  }
+}
+
+.header__item {
+  margin-left: 44px;
+  margin-right: 16px;
+}
+
+.header__link-auth {
+  font-size: 13px;
+  line-height: 1.38;
+}
+
+.header__link-auth_active {
+  font-weight: 500;
+}
+
+@media screen and (max-width: 1040px) {
+  .header__link-account {
+    display: none;
+  }
+}
