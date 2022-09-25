@@ -18,11 +18,6 @@
   }
 }
 
-.filter-checkbox_disabled {
-  color: #8b8b8b;
-  opacity: .7;
-}
-
 .filter-checkbox__input {
   width: 36px;
   grid-column: 1;
@@ -68,6 +63,11 @@
 
 .filter-checkbox__toggle_active {
   background-position: 22px 6px;
+}
+
+.filter-checkbox__toggle_disabled {
+  background-color: #ebebeb;
+  background-image: url(./../../images/checkbox-button_disabled.svg);
 }
 
 .filter-checkbox__title {

@@ -7,15 +7,25 @@ import './SavedMovies.css';
 
 function SavedMovies() {
   const [checkboxPlight, setCheckboxPlight] = React.useState(false);
+  const [checkboxState, setCheckboxState] = React.useState(false);
 
   function handleChangeCheckboxPlight() {
-    setCheckboxPlight(!checkboxPlight);
+    !checkboxState && setCheckboxPlight(!checkboxPlight);
+  }
+
+  function handleSubmitSearchForm(event) {
+    event.preventDefault();
+    const filterCheckboxInput = document.querySelector('.filter-checkbox__input')
+    const filterCheckboxToggle = document.querySelector('.filter-checkbox__toggle')
+    filterCheckboxInput.setAttribute('disabled', true);
+    filterCheckboxToggle.classList.add('filter-checkbox__toggle_disabled')
+    setCheckboxState(true);
   }
 
   return(
     <main className='saved-movies'>
-      <SearchForm/>
-      <FilterCheckbox checkboxPlight = {checkboxPlight} onClick={handleChangeCheckboxPlight}/>
+      <SearchForm onClick={handleSubmitSearchForm}/>
+      <FilterCheckbox checkboxState={checkboxState} checkboxPlight = {checkboxPlight} onClick={handleChangeCheckboxPlight}/>
       <Preloader/>
       <MoviesCardList page='saved-movies'/>
     </main>

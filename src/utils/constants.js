@@ -5,7 +5,7 @@ export const moviesBase = [{
   duration: '0ч 40мин'
 }, {
   _id: '627c256814401f0b4e62f590',
-  preview: 'http://www.stranstvo.ru/images/banners/tma_banner_fullmoon.jpg',
+  preview: 'https://sun9-86.userapi.com/impf/c850420/v850420998/3cd06/P2x5j9PG9x8.jpg?size=604x340&quality=96&sign=324bb2a2fac9ec4da94edfcd85547db8&type=album',
   title: 'Киноальманах "100 лет дизайна"',
   duration: '1ч 47мин'
 }, {
