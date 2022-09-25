@@ -6,10 +6,16 @@ import Preloader from '../Preloader/Preloader';
 import './SavedMovies.css';
 
 function SavedMovies() {
+  const [checkboxPlight, setCheckboxPlight] = React.useState(false);
+
+  function handleChangeCheckboxPlight() {
+    setCheckboxPlight(!checkboxPlight);
+  }
+
   return(
     <main className='saved-movies'>
       <SearchForm/>
-      <FilterCheckbox/>
+      <FilterCheckbox checkboxPlight = {checkboxPlight} onClick={handleChangeCheckboxPlight}/>
       <Preloader/>
       <MoviesCardList page='saved-movies'/>
     </main>

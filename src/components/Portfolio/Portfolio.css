@@ -25,35 +25,3 @@
   grid-template-columns: 1fr auto;
   border-bottom: 1px solid #424242;
 }
-
-.portfolio__text {
-  margin: 20px 0 19px;
-  font-weight: 500;
-  font-size: 30px;
-  line-height: 1.67;
-}
-
-
-@media screen and (max-width: 1040px) and (min-width: 761px) {
-  .portfolio__text {
-    font-weight: 400;
-    font-size: 28px;
-    line-height: 1.79;
-  }
-}
-
-@media screen and (max-width: 760px) {
-  .portfolio__text {
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 1.56;
-  }
-}
-
-.portfolio__link-arrow {
-  min-width: 29px;
-  height: auto;
-  background-image: url(../../images/arrow.svg);
-  background-repeat: no-repeat;
-  background-position: right center;
-}

@@ -1,6 +1,6 @@
 .movies__search-form {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr min-content;
   padding-bottom: 13px;
   border-bottom: 1px solid #424242;
 }
@@ -21,14 +21,9 @@
   line-height: 34px;
 }
 
-.movies__search-bar:focus {
-  outline: none;
-}
-
 @media screen and (max-width: 760px) {
   .movies__search-bar {
     font-size: 18px;
     line-height: 22px;
-    max-width: 95%;
   }
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Portfolio from '../Portfolio/Portfolio';
 import photo from '../../images/about-me__photo.png';
 import './AboutMe.css';
@@ -21,8 +20,8 @@ function AboutMe() {
             </p>
           </div>
           <ul className='list about-me__list' aria-label='ссылки на соцсети'>
-            <li className='about-me__item'><Link className='link_color_white' to='https://t.me/LenaDavy'>Telegram</Link></li>
-            <li className='about-me__item'><Link className='link_color_white' to='https://github.com/LenaDavy'>Github</Link></li>
+            <li className='about-me__item'><a className='link_color_white' href='https://t.me/LenaDavy' target='_blank' rel='noreferrer'>Telegram</a></li>
+            <li className='about-me__item'><a className='link_color_white' href='https://github.com/LenaDavy' target='_blank' rel='noreferrer'>Github</a></li>
           </ul>
         </div>
         <img className='about-me__photo' src={photo} alt='Фотография'/>

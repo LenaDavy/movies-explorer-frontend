@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import './Portfolio.css';
 
 function Portfolio() {
@@ -8,16 +7,13 @@ function Portfolio() {
       <h3 className='portfolio__heading'>Портфолио</h3>
       <ul className='list'>
         <li className='portfolio__external-link'>
-          <p className='portfolio__text'>Статичный сайт</p>
-          <Link className='link portfolio__link-arrow' to='https://github.com/LenaDavy/how-to-learn.git'/>
+          <a className='link_color_white link_type_arrow' href='https://github.com/LenaDavy/how-to-learn.git' target='_blank' rel='noreferrer'>Статичный сайт</a>
         </li>
         <li className='portfolio__external-link'>
-          <p className='portfolio__text'>Адаптивный сайт</p>
-          <Link className='link portfolio__link-arrow' to='https://lenadavy.github.io/russian-travel/'/>
+          <a className='link_color_white link_type_arrow' href='https://lenadavy.github.io/russian-travel/' target='_blank' rel='noreferrer'>Адаптивный сайт</a>
         </li>
         <li className='portfolio__external-link'>
-          <p className='portfolio__text'>Одностраничное приложение</p>
-          <Link className='link portfolio__link-arrow' to='https://github.com/LenaDavy/react-mesto-api-full.git'/>
+          <a className='link_color_white link_type_arrow' href='https://github.com/LenaDavy/react-mesto-api-full.git' target='_blank' rel='noreferrer'>Одностраничное приложение</a>
         </li>
       </ul>
     </section> 
