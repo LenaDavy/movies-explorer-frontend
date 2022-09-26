@@ -1,0 +1,27 @@
+.portfolio__heading {
+  margin: 100px 0 30px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.11;
+  color: #8b8b8b8b;
+}
+
+@media screen and (max-width: 1040px) and (min-width: 761px) {
+  .portfolio__heading {
+    margin-top: 90px;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .portfolio__heading {
+    margin: 70px 0 20px;
+    font-size: 14px;
+    line-height: 1.43;
+  }
+}
+
+.portfolio__external-link {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  border-bottom: 1px solid #424242;
+}

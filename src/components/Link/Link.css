@@ -1,0 +1,73 @@
+.link_color_white {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.link_color_white:hover {
+  opacity: .7;
+}
+
+.link_color_black {
+  text-decoration: none;
+  color: #000000;
+}
+
+.link_color_black:hover {
+  opacity: .7;
+}
+
+.link_color_blue {
+  text-decoration: none;
+  color: #4285F4;
+}
+
+.link_color_blue:hover {
+  opacity: .7;
+}
+
+.link_type_logo {
+  width: 38px;
+  height: 38px;
+  background-image: url(../../images/logo.svg);
+  background-repeat:no-repeat;
+  background-position: center;
+}
+
+.link_type_account {
+  padding: 8px 20px;
+  background-color: #313131;
+  border-radius: 20px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.14;
+  max-width: 100px;
+}
+
+.link_type_arrow {
+  margin: 20px 0 19px;
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 1.67;
+  min-width: 29px;
+  height: auto;
+  background-image: url(../../images/arrow.svg);
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+
+
+@media screen and (max-width: 1040px) and (min-width: 761px) {
+  .link_type_arrow {
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 1.79;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .link_type_arrow {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.56;
+  }
+}
