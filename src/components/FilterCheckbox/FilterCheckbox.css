@@ -41,10 +41,10 @@
   grid-row: 1;
   width: 36px;
   height: 20px;
-  background-color: #3ddc84;
+  background-color: #ebebeb;
   border: none;
   border-radius: 20px;
-  background-image: url(./../../images/checkbox-button.svg);
+  background-image: url(./../../images/checkbox-button_disabled.svg);
   background-repeat: no-repeat;
   background-position: 6px 6px;
 }
@@ -62,12 +62,9 @@
 }
 
 .filter-checkbox__toggle_active {
+  background-color: #3ddc84;
   background-position: 22px 6px;
-}
-
-.filter-checkbox__toggle_disabled {
-  background-color: #ebebeb;
-  background-image: url(./../../images/checkbox-button_disabled.svg);
+  background-image: url(./../../images/checkbox-button.svg);
 }
 
 .filter-checkbox__title {

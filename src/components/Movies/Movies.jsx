@@ -16,9 +16,7 @@ function Movies() {
   function handleSubmitSearchForm(event) {
     event.preventDefault();
     const filterCheckboxInput = document.querySelector('.filter-checkbox__input')
-    const filterCheckboxToggle = document.querySelector('.filter-checkbox__toggle')
     filterCheckboxInput.setAttribute('disabled', true);
-    filterCheckboxToggle.classList.add('filter-checkbox__toggle_disabled')
     setCheckboxState(true);
   }
 
