@@ -85,10 +85,6 @@
   }
 }
 
-.identity__input::placeholder {color: #ffffff;}
-.identity__input::-moz-placeholder {color: #ffffff;opacity: 1;}
-.identity__input:-ms-input-placeholder {color: #ffffff;}
-
 .identity__input_type_error {
   color: #ee3465;
 }
@@ -116,4 +112,10 @@
     font-size: 12px;
     line-height: 15px;
   }
+}
+
+.identity__response-err {
+  font-size: 10px;
+  line-height: 12px;
+  color: #ee3465;
 }

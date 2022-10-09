@@ -16,6 +16,11 @@
   }
 }
 
+
+.header_hide {
+  display: none;
+}
+
 @media screen and (max-width: 760px) {
   .header__link-logo {
     padding-top: 3px;

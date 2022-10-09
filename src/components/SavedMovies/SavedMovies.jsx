@@ -2,30 +2,81 @@ import React from 'react';
 import SearchForm from '../SearchForm/SearchForm';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import Preloader from '../Preloader/Preloader';
+import { getUserMovies } from '../../utils/MainApi';
+import { filterByQuery } from '../../utils/constants';
 import './SavedMovies.css';
 
 function SavedMovies() {
-  const [checkboxPlight, setCheckboxPlight] = React.useState(false);
-  const [checkboxState, setCheckboxState] = React.useState(false);
+  const [userMovies, setUserMovies] = React.useState([]);
+  const [searchData, setSearchData] = React.useState('');
+  const [filterCheckboxPlight, setFilterCheckboxPlight] = React.useState(false);
+  const [resultMessage, setResultMessage] = React.useState('')
+  const [messageVisible, setMessageVisible] = React.useState(false);
+  const [displayMovies, setDisplayMovies] = React.useState([]);
 
+  React.useEffect(() => {
+    let userSearch = localStorage.getItem('userSearch');
+    let userCheckbox = localStorage.getItem('userCheckbox');
+    let userMessage = localStorage.getItem('userMessage');
+   
+    (userSearch !== null) && setSearchData(JSON.parse(userSearch));
+    (userCheckbox !== null) && setFilterCheckboxPlight(JSON.parse(userCheckbox));
+    (userMessage !== null) && setMessageVisible(JSON.parse(userMessage));
+    
+     getUserMovies(localStorage.getItem('token'))
+    .then((savedMovies) => {setUserMovies(savedMovies.movies)})
+    .catch((err) => { console.log(`Ошибка загрузки фильмов: ${err}`);
+      setMessageVisible(true);
+      setResultMessage('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.')
+    })
+  },[]);
+
+  React.useEffect(() => {
+    const searchArray = filterByQuery(searchData, userMovies);
+    if (filterCheckboxPlight) {
+      const shortArray = searchArray.filter(movie => movie.duration <= 40);
+      setDisplayMovies(shortArray);
+    } else { setDisplayMovies(searchArray)}
+  },[userMovies, filterCheckboxPlight]);
+  
+  React.useEffect(() => {
+    if (displayMovies.length === 0) {setResultMessage('Ничего не найдено')}
+    else {setResultMessage('')}
+  },[displayMovies]);
+
+  function handleChangeSearchData(e) {setSearchData(e.target.value)}
   function handleChangeCheckboxPlight() {
-    !checkboxState && setCheckboxPlight(!checkboxPlight);
+    setFilterCheckboxPlight(!filterCheckboxPlight);
+    localStorage.setItem('userCheckbox', JSON.stringify(!filterCheckboxPlight))
   }
 
-  function handleSubmitSearchForm(event) {
-    event.preventDefault();
-    const filterCheckboxInput = document.querySelector('.filter-checkbox__input')
-    filterCheckboxInput.setAttribute('disabled', true);
-    setCheckboxState(true);
+  function handleSubmitSearch(e) {
+    e.preventDefault();
+    const searchValidity = e.target.previousElementSibling.checkValidity()
+    if (!searchValidity) {
+      e.target.previousElementSibling.setAttribute('placeholder', 'Нужно ввести ключевое слово')
+    } else {
+      localStorage.setItem('userSearch', JSON.stringify(searchData));
+      localStorage.setItem('userCheckbox', JSON.stringify(filterCheckboxPlight));
+      setMessageVisible(true);
+      localStorage.setItem('userMessage', JSON.stringify(true));
+      const searchArray = filterByQuery(searchData, userMovies);
+      if (filterCheckboxPlight) {setDisplayMovies(searchArray.filter(movie => movie.duration <= 40))}
+      else {setDisplayMovies(searchArray)} 
+    }
+  };
+
+  function handleClickDeleteMovie(movie) {
+    const editedArr = displayMovies.filter(function(item) { return item.movieId !== movie.movie.movieId})
+    setDisplayMovies(editedArr);
   }
 
   return(
     <main className='saved-movies'>
-      <SearchForm onClick={handleSubmitSearchForm}/>
-      <FilterCheckbox checkboxState={checkboxState} checkboxPlight = {checkboxPlight} onClick={handleChangeCheckboxPlight}/>
-      <Preloader/>
-      <MoviesCardList page='saved-movies'/>
+      <SearchForm searchData={searchData} onChange={handleChangeSearchData} onClick={handleSubmitSearch} />
+      <FilterCheckbox filterCheckboxPlight={filterCheckboxPlight} onClick={handleChangeCheckboxPlight}/>
+      <span className={messageVisible ? 'saved-movies__message' : 'saved-movies__message_hide'}>{resultMessage}</span>
+      <MoviesCardList page='saved-movies' displayMovies={displayMovies} onClick={handleClickDeleteMovie}/>
     </main>
   )
 } 
