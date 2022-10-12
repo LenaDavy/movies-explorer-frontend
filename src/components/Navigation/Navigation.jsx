@@ -13,7 +13,7 @@ function Navigation(props) {
             <li className='navigation__item'><NavLink to='/movies' className='link_color_white navigation__link-common' activeClassName='navigation__link-common_active'>Фильмы</NavLink></li>
             <li className='navigation__item'><NavLink to='/saved-movies' className='link_color_white navigation__link-common' activeClassName='navigation__link-common_active'>Сохранённые фильмы</NavLink></li>
           </ul>
-          <Link to='/signin' className='link_color_white link_type_account navigation__link-account'>Аккаунт</Link>
+          <Link to='/profile' className='link_color_white link_type_account navigation__link-account'>Аккаунт</Link>
         </nav>
       </div>
     </section>

@@ -3,13 +3,22 @@ import './InfoTooltip.css';
 
 function InfoTooltip(props) {
 
+  React.useEffect(() => {
+    const close = (e) => {(e.keyCode === 27) && props.onClose()}
+
+    window.addEventListener('keydown', close)
+    return () => window.removeEventListener('keydown', close)
+  })
+
+  function closeByOverlay(e) {e.target.classList.contains('tooltip_open') && props.onClose()}
+
   return (
-    <main className={props.isOpen ? 'tooltip tooltip_open' : 'tooltip'}>
-      <div className='tooltip__form'>
-        <button className='button button_type_close tooltip__button-close' type='button'/>
-        <p className='tooltip__text'>{props.text ? props.text : "Что-то пошло не так! Попробуйте ещё раз."}</p>
+    <div className={props.isOpen ? 'tooltip tooltip_open' : "tooltip"} onClick={closeByOverlay}>
+      <div className="tooltip__main">
+        <button className="tooltip__close" type="button" onClick={props.onClose}/>
+        <p className="tooltip__text">Данные успешно изменены!</p>
       </div>
-    </main>
+    </div>
   );
 };
 

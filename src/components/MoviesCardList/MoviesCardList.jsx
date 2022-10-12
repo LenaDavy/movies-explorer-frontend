@@ -1,13 +1,13 @@
 import React from 'react';
 import Movie from '../Movie/Movie';
 import './MoviesCardList.css';
-import {moviesBase} from '../../utils/constants';
 
 function MoviesCardList(props) {
 
   return (
     <ul className='list movies__card-list'>
-      {moviesBase.map((movie) => {return <Movie key={movie._id} page={props.page} {...movie}/>})}
+      {props.displayMovies.map((movie) => {
+       return <Movie key={movie.id || movie._id} page={props.page} movie={movie} onClick={props.onClick} {...movie}/>})}
     </ul>
   )
 }

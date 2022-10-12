@@ -19,7 +19,7 @@
 }
 
 .filter-checkbox__input {
-  width: 36px;
+  width: 100%;
   grid-column: 1;
   grid-row: 1;
 }

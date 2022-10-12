@@ -72,6 +72,7 @@
   background-color: inherit;
   background-repeat: no-repeat;
   background-position: center;
+  background-image: url('./../../images/like-button.svg');
 }
 
 .movie__button_type_like-active {

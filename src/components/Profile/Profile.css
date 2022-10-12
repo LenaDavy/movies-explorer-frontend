@@ -67,13 +67,36 @@
   border: none;
 }
 
-.profile__input::placeholder {color: #ffffff;}
-.profile__input::-moz-placeholder {color: #ffffff;opacity: 1;}
-.profile__input:-ms-input-placeholder {color: #ffffff;}
-
 .profile__input_type_underline {
   padding-bottom: 16px;
   border-bottom: 1px solid #424242;
+}
+
+.profile__input_type_error {
+  color: #ee3465;
+}
+
+.profile__input_type_error::placeholder {color: #ee3465; opacity: 0.5;}
+.profile__input_type_error::-moz-placeholder {color: #ee3465; opacity: 0.5;}
+.profile__input_type_error:-ms-input-placeholder {color: #ee3465; opacity: 0.5;}
+
+
+.profile__message-error {
+  margin: 10px 0 0;
+  min-height: 10px;
+  font-size: 10px;
+  line-height: 12px;
+  color: #ee3465;
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+.profile__response-err {
+  font-size: 10px;
+  line-height: 12px;
+  color: #ee3465;
+  grid-column-start: 1;
+  grid-column-end: 3;
 }
 
 .profile__button-edit {
@@ -83,6 +106,8 @@
   font-size: 13px;
   line-height: 16px;
   font-weight: 400;
+  grid-column-start: 1;
+  grid-column-end: 3;
 }
 
 @media screen and (max-width: 1040px) and (min-width: 761px) {
@@ -99,8 +124,13 @@
   }
 }
 
+.profile__button-edit_disabled {
+  opacity: .7;
+}
+
 .profile__button-signout {
   margin-top: 16px;
+  margin-bottom: 70px;
   color: #EE3465;
   background-color: inherit;
   font-size: 13px;
@@ -108,8 +138,15 @@
   font-weight: 500;
 }
 
+@media screen and (max-width: 1040px) and (min-width: 761px) {
+  .profile__button-signout {
+    margin-bottom: 269px;
+  }
+}
+
 @media screen and (max-width: 760px) {
   .profile__button-signout {
+    margin-bottom: 40px;
     font-size: 12px;
     line-height: 15px;
   }

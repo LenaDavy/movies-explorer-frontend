@@ -31,3 +31,11 @@
     margin-top: 76px;
   }
 }
+
+.movies__message {
+  text-align: center;
+}
+
+.movies__message_hide {
+  display: none;
+}
