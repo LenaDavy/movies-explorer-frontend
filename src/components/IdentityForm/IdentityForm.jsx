@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import { REGEX_EMAIL } from '../../utils/constants'
 import './IdentityForm.css'
 
 function IdentityForm(props) {
@@ -15,7 +15,7 @@ function IdentityForm(props) {
           <label  className='identity__label'>E-mail
             <input className={props.validate.inputsValidity.email
               ? 'identity__input' : 'identity__input identity__input_type_error'
-              } required type='email' name='email' value={props.validate.values.email} onChange={props.validate.handleChange}/>
+              } required type='email' name='email' pattern={REGEX_EMAIL} value={props.validate.values.email} onChange={props.validate.handleChange}/>
             <span className='identity__message-error' name='emailError'>{props.validate.errors.emailError}</span>
           </label>
           <label  className='identity__label'>Пароль

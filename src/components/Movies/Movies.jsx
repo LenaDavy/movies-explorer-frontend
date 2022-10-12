@@ -5,7 +5,7 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
 import { getInitialMovies } from '../../utils/MoviesApi';
 import { getUserMovies } from '../../utils/MainApi';
-import { filterByQuery, renderParams } from '../../utils/constants';
+import { SHORT_DURATION, filterByQuery, renderParams } from '../../utils/constants';
 import './Movies.css';
 
 function Movies() {
@@ -14,7 +14,7 @@ function Movies() {
   const [preloaderState, setPreloaderState] = React.useState(false);
   const [filterCheckboxPlight, setFilterCheckboxPlight] = React.useState(false);
   const [resultMessage, setResultMessage] = React.useState('')
-  const [messageVisible, setMessageVisible] = React.useState(false);
+  const [queryState, setQueryState] = React.useState(false);
   const [buttonMoreState, setButtonMoreState] = React.useState(false);
   const [displayMovies, setDisplayMovies] = React.useState([]);
   const [adaptedMovies, setAdaptedMovies] = React.useState([]);
@@ -25,17 +25,17 @@ function Movies() {
     let beatSearch = localStorage.getItem('beatSearch');
     let beatCheckbox = localStorage.getItem('beatCheckbox');
     let beatMovies = localStorage.getItem('initialMovies');
-    let beatMessage = localStorage.getItem('beatMessage');
+    let beatQuery = localStorage.getItem('beatQuery');
 
     (beatSearch !== null) && setSearchData(JSON.parse(beatSearch));
     (beatCheckbox !== null) && setFilterCheckboxPlight(JSON.parse(beatCheckbox));
     (beatMovies !== null) && setInitialMovies(JSON.parse(beatMovies));
-    (beatMessage !== null) && setMessageVisible(JSON.parse(beatMessage));
+    (beatQuery !== null) && setQueryState(JSON.parse(beatQuery));
 
     getUserMovies(localStorage.getItem('token'))
     .then((savedMovies) => {localStorage.setItem('userMovies', JSON.stringify(savedMovies.movies))})
     .catch((err) => { console.log(`Ошибка загрузки фильмов: ${err}`);
-      setMessageVisible(true);
+      setQueryState(true);
       setResultMessage('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.')
   })
   }, []);
@@ -43,7 +43,7 @@ function Movies() {
   React.useEffect(() => {
     const searchArray = filterByQuery(searchData, initialMovies);
     if (filterCheckboxPlight) {
-      const shortArray = searchArray.filter(movie => movie.duration <= 40);
+      const shortArray = searchArray.filter(movie => movie.duration <= SHORT_DURATION);
       setDisplayMovies(shortArray);
     } else { setDisplayMovies(searchArray)}
   },[initialMovies, filterCheckboxPlight]);
@@ -52,15 +52,23 @@ function Movies() {
   React.useEffect(() => {
     if (displayMovies.length === 0) {
       setResultMessage('Ничего не найдено');
-      setAdaptedMovies([])
+      setAdaptedMovies([]);
       setButtonMoreState(false);
     } else {
-      setResultMessage('')
-      const params = renderParams(windowWidth)
-      setAdaptedMovies(displayMovies.slice(0, params.start));
+      const params = renderParams(windowWidth);
+      let filmsNumber = localStorage.getItem('filmsNumber');
+      if (filmsNumber <= 0) {
+        setAdaptedMovies(displayMovies.slice(0, params.start));
+        localStorage.setItem('filmsNumber', JSON.stringify(params.start));
+      } else {setAdaptedMovies(displayMovies.slice(0, filmsNumber))}
+      setResultMessage('');
       setButtonMoreState(true);
     }
   }, [displayMovies, windowWidth]);
+
+  React.useEffect(() => {
+  (adaptedMovies.length >= displayMovies.length) && setButtonMoreState(false);
+  }, [adaptedMovies]);
 
   function handleChangeSearchData(e) {setSearchData(e.target.value)}
 
@@ -73,48 +81,59 @@ function Movies() {
     e.preventDefault();
     const searchValidity = e.target.previousElementSibling.checkValidity()
     if (searchValidity) {
+      e.target.setAttribute('disabled', true);
+      e.target.classList.add('button_type_search_disabled');
       setPreloaderState(true)
       localStorage.setItem('beatSearch', JSON.stringify(searchData));
       localStorage.setItem('beatCheckbox', JSON.stringify(filterCheckboxPlight));
-
-      getInitialMovies()
-      .then((initialMovies) => {
-        localStorage.setItem('initialMovies', JSON.stringify(initialMovies));
-        setInitialMovies(initialMovies);
-        setMessageVisible(true);
-        localStorage.setItem('beatMessage', JSON.stringify(true));
-        setPreloaderState(false);
-      })
-      .catch((err) => {console.log(`Ошибка загрузки фильмов: ${err}`);
-        setPreloaderState(false);
-        setDisplayMovies([]);
-        setButtonMoreState(false);
-        setResultMessage('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.')
-      })
+      
+      if (queryState) {setInitialMovies(JSON.parse(localStorage.getItem('initialMovies')))}
+      else { getInitialMovies()
+        .then((initialMovies) => {
+          localStorage.setItem('initialMovies', JSON.stringify(initialMovies));
+          setInitialMovies(initialMovies);
+          setQueryState(true);
+        })
+        .catch((err) => {console.log(`Ошибка загрузки фильмов: ${err}`);
+          setPreloaderState(false);
+          setDisplayMovies([]);
+          setButtonMoreState(false);
+          e.target.removeAttribute('disabled', true);
+          e.target.classList.remove('button_type_search_disabled');
+          setResultMessage('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.')
+        })
+      }
+      localStorage.setItem('queryState', JSON.stringify(true));
+      localStorage.setItem('filmsNumber', JSON.stringify(0));
+      setPreloaderState(false);
+      e.target.removeAttribute('disabled', true);
+      e.target.classList.remove('button_type_search_disabled');
     } else {e.target.previousElementSibling.setAttribute('placeholder', 'Нужно ввести ключевое слово')}
   };
 
   function handleClickMoreMovies() {
     const params = renderParams(windowWidth)
-    const currentValue = (adaptedMovies.length + params.more);
-    
-    if (displayMovies.length > currentValue) {
-      const addedMovies = displayMovies.filter(function(item, i) { return i < currentValue});
+    let filmsNumber = JSON.parse(localStorage.getItem('filmsNumber'));
+    let currentValue = (filmsNumber + params.more);
+    ((displayMovies.length - filmsNumber) <= 3 ) && (currentValue = displayMovies.length)
+    localStorage.setItem('filmsNumber', JSON.stringify(currentValue));
+    const addedMovies = displayMovies.slice(0, currentValue);
       setAdaptedMovies(addedMovies);
-    }
+  
   } 
 
   function handleChangeUserMovie(action, movie) {
     let keptArr = JSON.parse(localStorage.getItem('userMovies'));
+    let beatMovies = JSON.parse(localStorage.getItem('initialMovies'));
 
     if (action) {
-    keptArr.push(movie.newMovie);
-    localStorage.setItem('userMovies', JSON.stringify(keptArr))
-    setDisplayMovies(adaptedMovies);
+      keptArr.push(movie.newMovie);
+      localStorage.setItem('userMovies', JSON.stringify(keptArr))
+      setInitialMovies(beatMovies);
     } else {
       keptArr = keptArr.filter(function(item) { return item.movieId !== movie.movie.movieId})
       localStorage.setItem('userMovies', JSON.stringify(keptArr))
-      setDisplayMovies(adaptedMovies)
+      setInitialMovies(beatMovies);
     }
   }
 
@@ -122,7 +141,7 @@ function Movies() {
     <main className='movies'>
       <SearchForm searchData={searchData} onClick={handleSubmitMoviesSearch} onChange={handleChangeSearchData}/>
       <FilterCheckbox onClick={handleChangeCheckboxPlight} filterCheckboxPlight={filterCheckboxPlight}/>
-      <span className={messageVisible ? 'movies__message' : 'movies__message_hide'}>{resultMessage}</span>
+      <span className={queryState ? 'movies__message' : 'movies__message_hide'}>{resultMessage}</span>
       <Preloader state={preloaderState}/>
       <MoviesCardList page='movies' displayMovies={adaptedMovies} onClick={handleChangeUserMovie}/>
       <button className={buttonMoreState ?'button button_type_more movies__button-more' : 'button_type_more_hide'}

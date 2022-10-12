@@ -21,26 +21,31 @@ import './App.css';
 
 
 function App() {
+  const [isLockedApp, setIsLockedApp] = React.useState(true);
   const [userData, setUserData] = React.useState({});
   const [displayNavigation, setDisplayNavigation] = React.useState(false);
-  const [isLockedApp, setIsLockedApp] = React.useState(true);
-  let token = localStorage.getItem('token');
-
+  
   React.useEffect(() => {
-    if (token) {
-      getUserData(token) 
-      .then((userInfo) => {setUserData({name: userInfo.name, email: userInfo.email, _id: userInfo._id, token})})
-      .catch(err => {console.log(`Ошибка авторизации пользователя: ${err}`)})
-    } else {setIsLockedApp(false)}
-  },[token]);
+    let token = localStorage.getItem('token');
+    if (!token) { setIsLockedApp(false)}
+    else {getUserData(token) 
+      .then((userInfo) => {
+        setUserData({name: userInfo.name, email: userInfo.email, _id: userInfo._id, token});
+      })
+      .catch(err => {console.log(`Ошибка авторизации пользователя: ${err}`);
+        setIsLockedApp(false);
+      })
+    }
+  }, [isLockedApp]);
 
   function handleChangeUserData(data) {
-    setUserData({...userData, name: data.name, email: data.email})
+    setUserData({...userData, name: data.name, email: data.email, _id: data._id})
+    setIsLockedApp(true);
   }
-  
-  function handleClickDisplayNavigation() {
-    setDisplayNavigation(!displayNavigation)
-  }
+
+  function handleLogOut() {setIsLockedApp(false)};
+
+  function handleClickDisplayNavigation() {setDisplayNavigation(!displayNavigation)};
 
   return (
     <UserContext.Provider value={userData}>
@@ -59,13 +64,13 @@ function App() {
             header={Header} movies={SavedMovies} footer={Footer} navigation={Navigation}
           />
           <ProtectedRoute path='/profile' isLogged={isLockedApp} onClick={handleClickDisplayNavigation} isOpen={displayNavigation}
-            header={Header} profile={Profile} navigation={Navigation} onSubmit={handleChangeUserData}
+            header={Header} profile={Profile} navigation={Navigation} onSubmit={handleChangeUserData} onLogOut={handleLogOut}
           />
           <Route path='/signup' >
-            <Register/>
+            <Register isLogged={isLockedApp} onSubmit={handleChangeUserData}/>
           </Route>
           <Route path='/signin'>
-            <Login/>
+           <Login isLogged={isLockedApp} onSubmit={handleChangeUserData}/>
           </Route>
           <Route path='*'>
             <PageNotFound/>
